@@ -50,5 +50,6 @@ Job_ability_df=pd.DataFrame({'工作技能': [key for key, values in Job_ability
 df_concat=pd.concat([Job_category_df,Job_ability_df],axis=1)
 df_concat
 ```
+![image](https://user-images.githubusercontent.com/44692570/142759292-e4efa863-19be-44d8-b5fa-190ad05fe485.png)
 
 
