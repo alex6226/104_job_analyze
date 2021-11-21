@@ -57,4 +57,49 @@ df_concat
 
 ## (二) 學歷要求
 
+```
+#最低學歷要求分布
+
+def Education_require(sentence):
+    
+    if '不拘' in sentence:
+        return '不拘'
+
+    elif '高中' in sentence:
+        return '高中'
+
+    elif '專科' in sentence or '大學' in sentence:    
+        return '專科、大學'
+    
+    elif '碩士' in sentence:
+        return '碩士'
+    
+    elif '博士' in sentence:
+        return '博士'
+
+data['最低學歷要求']=data.學歷要求.apply(lambda x :Education_require(x))
+
+
+#最低學歷要求分布長條圖
+
+import numpy as np
+import matplotlib.pyplot as plt
+ 
+plt.rcParams['font.sans-serif'] = ['Taipei Sans TC Beta'] 
+height = data.最低學歷要求.value_counts().values
+bars = data.最低學歷要求.value_counts().index
+x_pos = np.arange(len(bars))
+
+plt.title('最低學歷要求')
+plt.bar(x_pos, height, color='lightblue',  edgecolor='blue')
+plt.xticks(x_pos, bars)
+plt.ylabel('出現次數')
+
+for x, y in enumerate(height):
+    plt.text(x, y, '%s' % y, ha='center',va='bottom')
+
+plt.show()
+```
+![image](https://user-images.githubusercontent.com/44692570/142760087-ff90a17e-4b4f-4e8e-8a75-e8593ed30477.png)
+
 
