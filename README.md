@@ -8,7 +8,7 @@
 - 3.要求擅長的工具排名<br>
 - 4.了解所選工作的工作性質及該具備的能力<br>
 
-## (一)  104人力銀行職缺內容抓取
+## (一)  104人力銀行數據分析職缺內容抓取
 
 
 ```
@@ -20,6 +20,7 @@ data.head(5)
 ```
 ![image](https://user-images.githubusercontent.com/44692570/142759115-8f22eeb7-6d20-4dfe-9e39-deae7c6980f4.png)
 
+這邊我們抓取了356個工作名稱有提到數據分析的職缺
 ## (二) 職務類別&工作技能要求
 
 ```
@@ -51,5 +52,7 @@ df_concat=pd.concat([Job_category_df,Job_ability_df],axis=1)
 df_concat
 ```
 ![image](https://user-images.githubusercontent.com/44692570/142759292-e4efa863-19be-44d8-b5fa-190ad05fe485.png)
+
+從資料上來看，可以發現說數據分析的職缺與<b>市場調查與分析</b>這塊息息相關
 
 
