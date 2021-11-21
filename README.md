@@ -174,15 +174,70 @@ association_df
 - confidence(信賴度):以第一筆資料為例，在要求需要PowerPoint的職位，有100%需要你會Excel<br>
 - lift(提升度):計算方式為confidence(A->B)/support(B)，小於1為負相關，等於1為獨立，大於1則是正相關<br>
 
-了解Apriori演算法後我們來看分析結果，我們可以歸類出四種組合，分別為:<br>
+了解Apriori演算法後來看分析結果，我們可以歸類出下面四種組合，分別為:<br>
 
-### 1.Excel、PowerPoint、Word
-### 2.R、Python
-### 3.Python、MS SQL
-### 4.Tableau、Python 
+### 1. Excel、PowerPoint、Word
+### 2. R、Python
+### 3. Python、MS SQL
+### 4. Tableau、Python 
+
+那會用到第一種組合的工作應該比較偏向文書處理，第二、三種組合對於coding能力的要求相對比較高，第四種組合則偏向注重將數據視覺化的能力
+
+# (五) 探討工作性質及該具備的能力
+
+```
+#文字雲
+
+import jieba
+import re
+
+stopwords = [k.strip() for k in open('停用詞.txt', encoding='utf-8') if k.strip() != '']    #停用詞
+
+jieba.set_dictionary('dict.txt.big')  # 繁體中文檔
+
+#將工具的專有名詞加入自定義詞
+for keys in tool_cnt.keys():
+    jieba.add_word(keys)
+
+#刪除標標點符號
+def clean_Punctuation(text):
+    text=re.sub(r'[^\w\s]','',text) #刪除標標點符號
+    text=text.replace('\n','').replace('\r','').replace('\t','').replace(' ','').replace('[','').replace(']','')
+    return text
+#斷詞/去除標點符號/去除停用字
+def text_cut(sentence):
+    sentence_cut=[word for word in jieba.lcut(clean_Punctuation(sentence)) if word not in stopwords]
+
+    return sentence_cut
+
+job_content= data.工作內容 
+job_content_cut=[word for sent in job_content for word in set(text_cut(sent)) if word not in '數據分析']  #斷詞
+job_content_cut_cnt=Counter([word for word in job_content_cut])   #計算次數
+
+#文字雲作圖
+
+import wordcloud # 詞雲展示庫
+from PIL import Image # 影像處理庫
+import matplotlib.pyplot as plt # 影像展示庫
 
 
+#根據單詞及其頻率生成詞雲
+wc = wordcloud.WordCloud(
+    font_path='NotoSerifCJKtc-Medium.otf', # 設定字型格式
+    max_words=40, # 最多顯示詞數
+    max_font_size=180, # 字型最大值
+    background_color='white',
+    width=800, height=600,
+)
 
+wc.generate_from_frequencies(job_content_cut_cnt) # 從字典生成詞雲
+plt.imshow(wc) # 顯示詞雲
+plt.axis('off') # 關閉座標軸
+plt.show() # 顯示影像
+```
+![image](https://user-images.githubusercontent.com/44692570/142763302-e91f8212-3122-4112-94c0-3bcd3aab3e4e.png)
+
+這邊我將工作內容的欄位做斷詞，並使用set()函數去除重複的詞，以防一個職缺提到一個詞的頻率太頻繁，而這個詞在其他職缺卻鮮少出現，導致呈現結果不如預期，也就是說若有一個職缺的工作內容提到「大數據的時代，我們需要大數據的人才」，雖然他提到大數據一詞二次，但在我這邊只會記錄一次，
 
 
 
