@@ -3,9 +3,9 @@
 
 有一個學習的方向對於在學的學生無疑是最大的幫助，如果能了解未來工作所需要具備的技能或是能力，想必可以增加學習的動力，而我本身是就讀數據分析相關的領域，因此我對於在104人力銀行上的數據分析職缺進行了分析，希望能透過分析結果了解以下幾點:
 
-- 1.選擇的工作通常屬於哪種職務類別以要求的工作技能為何<br>
+- 1.選擇的工作通常屬於哪種職務類別以及要求的工作技能為何<br>
 - 2.要求的學歷分布<br>
-- 3.要求擅長的工具排名<br>
+- 3.要求擅長的工具<br>
 - 4.了解所選工作的工作性質及該具備的能力<br>
 
 ## (一)  104人力銀行數據分析職缺內容抓取
@@ -241,8 +241,49 @@ plt.show() # 顯示影像
 
 從文字雲圖上可以看到除了<b>報表、資料庫、系統</b>等比較偏硬實力的詞，也可以看到<b>協助、專案、溝通、團隊、合作</b>等與團隊合作相關的詞，因此我們可以得知，與人交際溝通的能力在數據分析相關工作也是非常重要的。另外<b>經驗、熟悉</b>二詞出現的頻率也很高，這蠻好理解，畢竟在我們資訊業經驗的累積與工具的熟悉度是非常重要的，在大學參與產實習或者是產學合作是一個累積經驗與熟悉工具的好方法。
 
+# (六) 若將工作的內容分成3個主題
 
+```
+#主題分析
 
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+
+# 將字串切割後依照逗點分割
+data['工作內容2'] = data.工作內容.apply(lambda x: str(text_cut(x)).replace(
+    '[', '').replace(']"', '').replace(',', '').replace('\'', ''))
+
+     
+data['其他條件2'] = data.其他條件.apply(lambda x: str(text_cut(x)).replace(
+    '[', '').replace(']"', '').replace(',', '').replace('\'', ''))
+
+#模型訓練
+tf_vectorizer = CountVectorizer(strip_accents='unicode',
+                                max_df=0.5,
+                                min_df=10)  
+tf = tf_vectorizer.fit_transform(data['工作內容2'])
+
+lda = LatentDirichletAllocation(n_components=3, max_iter=50,    #n_components=3/分成三個主題
+                                learning_method='online',
+                                learning_offset=50.,
+                                random_state=0)
+
+lda.fit(tf)
+
+def print_topic(feature_names, n_top_words):
+    for topic_idx, topic in enumerate(lda.components_):
+
+        print("主題 %d:" % (topic_idx+1))
+        print(" ".join([feature_names[i]
+                        for i in topic.argsort()[:-n_top_words - 1:-1]]))
+        print()
+    
+tf_feature_names = tf_vectorizer.get_feature_names()
+print_topic(tf_feature_names, 20)
+```
+![image](https://user-images.githubusercontent.com/44692570/142764860-7b5fb994-9f98-4df4-97dc-241692b044a4.png)
+
+這邊使用scikit-learn的 LatentDirichletAllocation套件將工作內容分成三個主題。主題1像是針對使用者體驗方面，主題2偏向專案的規劃與執行，主題3則是工具的使用方面。
 
 
 
