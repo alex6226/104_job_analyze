@@ -102,7 +102,7 @@ plt.show()
 ```
 ![image](https://user-images.githubusercontent.com/44692570/142760087-ff90a17e-4b4f-4e8e-8a75-e8593ed30477.png)
 
-數據分析這一行對於學歷的要求沒有想像中的高，又或者說會在104上開職缺的工作通常對學歷的要求沒有那麼苛刻
+數據分析這一行對於學歷的要求沒有想像中的高，又或者說會在104上開職缺的工作通常對學歷的要求可能相對會比較沒那麼苛刻
 
 # (三) 要求擅長的工具的排名
 
@@ -137,3 +137,21 @@ for x, y in enumerate(height):
 plt.show()
 ```
 ![image](https://user-images.githubusercontent.com/44692570/142760562-3d52f37c-6868-409f-9920-bae306fdc7b0.png)
+
+身為當下熱門程式語言的Python拿下了第一名，超過三分之一的職缺需要會使用Python，而Excel、PowerPoint及Word三樣基本分析工具也在前10名中佔了3個。MS SQL則是打敗其他SQL獨自擠進前10並排序第三。<br>
+
+在前面我們有發現說數據分析的職缺與<b>市場調查與分析</b>這塊有很大的關聯，因此對於製作報表及網路分析的工具也會有不小的需求，而Tableau、Power BI及Google Analytics的上榜也許可以間接證實數據分析與市場調查分析的關聯
+
+
+
+
+
+
+
+
+
+
+
+
+
+
