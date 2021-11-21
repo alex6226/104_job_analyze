@@ -8,7 +8,14 @@
 3.要求擅長的工具排名<br>
 4.了解所選工作的工作性質及該具備的能力<br>
 
+## 1.104人力銀行職缺內容抓取
 
 
+```
+import job104_spider
+
+# 取得工作內容/job_type=查詢內容/page=查詢頁數
+data = job104_spider.get_job_context('數據分析',18)
+```
 
 
