@@ -16,6 +16,8 @@ import job104_spider
 
 # 取得工作內容/job_type=查詢內容/page=查詢頁數
 data = job104_spider.get_job_context('數據分析',18)
+data.head(5)
 ```
+![image](https://user-images.githubusercontent.com/44692570/142759115-8f22eeb7-6d20-4dfe-9e39-deae7c6980f4.png)
 
 
