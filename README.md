@@ -18,7 +18,7 @@ import job104_spider
 data = job104_spider.get_job_context('數據分析',18)
 data.head(5)
 ```
-![image](https://user-images.githubusercontent.com/44692570/142759115-8f22eeb7-6d20-4dfe-9e39-deae7c6980f4.png)
+![image](https://user-images.githubusercontent.com/44692570/142760144-38777eeb-c10a-40d6-a324-c5d42d74a78e.png)
 
 這邊我們抓取了356個工作名稱有提到數據分析的職缺
 ## (二) 職務類別&工作技能要求
@@ -51,7 +51,7 @@ Job_ability_df=pd.DataFrame({'工作技能': [key for key, values in Job_ability
 df_concat=pd.concat([Job_category_df,Job_ability_df],axis=1)
 df_concat
 ```
-![image](https://user-images.githubusercontent.com/44692570/142759292-e4efa863-19be-44d8-b5fa-190ad05fe485.png)
+![image](https://user-images.githubusercontent.com/44692570/142760493-85da98e2-b9dd-440f-96a8-aee331219a2a.png)
 
 從資料上來看，可以發現說數據分析的職缺與<b>市場調查與分析</b>這塊息息相關
 
@@ -102,4 +102,38 @@ plt.show()
 ```
 ![image](https://user-images.githubusercontent.com/44692570/142760087-ff90a17e-4b4f-4e8e-8a75-e8593ed30477.png)
 
+數據分析這一行對於學歷的要求沒有想像中的高，又或者說會在104上開職缺的工作通常對學歷的要求沒有那麼苛刻
 
+# (三) 要求擅長的工具的排名
+
+```
+import jieba
+from collections import Counter
+
+data['擅長工具'] = data.擅長工具.apply(lambda x: x.replace(u'\u200b', '').replace(u'u3000','')) #刪除特殊字符
+data['擅長工具2'] = data.擅長工具.apply(lambda x: x.split('、'))  #分詞
+tool_text = data.擅長工具2
+tool_cnt = Counter([word for sent in tool_text for word in sent])  # 計算次數
+tool_fre_most=tool_cnt.most_common(11)[1:] #前10名最常出現的詞
+
+#熱門工具排行長條圖
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.sans-serif'] = ['Taipei Sans TC Beta']
+height = [values for key, values in tool_fre_most]
+bars = [key for key, values in tool_fre_most]
+x_pos = np.arange(len(bars))
+plt.figure(figsize=(10, 4))
+plt.title('熱門工具排名')
+plt.bar(x_pos, height, color='#9999FF')
+plt.xticks(x_pos, bars, rotation=45)
+plt.ylabel('出現次數')
+
+for x, y in enumerate(height):
+    plt.text(x, y, '%s' % y, ha='center',va='bottom')
+
+plt.show()
+```
+![image](https://user-images.githubusercontent.com/44692570/142760562-3d52f37c-6868-409f-9920-bae306fdc7b0.png)
