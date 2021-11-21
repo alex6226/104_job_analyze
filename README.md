@@ -11,7 +11,8 @@
 ## (一)  104人力銀行數據分析職缺內容抓取
 
 
-```
+```![142761959-5ede1036-ed79-4829-b959-47cce02ec1ed](https://user-images.githubusercontent.com/44692570/142761982-ede34c2b-219f-41b6-8e4e-d8acc22865cd.png)
+
 import job104_spider
 
 # 取得工作內容/job_type=查詢內容/page=查詢頁數
@@ -142,9 +143,36 @@ plt.show()
 
 在前面我們有發現說數據分析的職缺與<b>市場調查與分析</b>這塊有很大的關聯，因此對於製作報表及網路分析的工具也會有不小的需求，而Tableau、Power BI及Google Analytics的上榜也許可以間接證實數據分析與市場調查分析的關聯
 
+# (四) 探討該具備的工具組合
+
+```
+#使用關聯規則找出容易同時需要具備的工具
+
+from mlxtend.preprocessing import TransactionEncoder    #編碼器
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
+
+te = TransactionEncoder()
+te_ary = te.fit(data['擅長工具2']).transform(data['擅長工具2'])
+tool_df = pd.DataFrame(te_ary, columns=te.columns_)
+tool_df.head(5)
 
 
+frequent_items = apriori(tool_df, min_support=0.1, use_colnames=True)   #min_support為0.1
+association_df = association_rules(frequent_items,metric='confidence', min_threshold=0.3).sort_values(by='confidence', ascending=False)[
+    ['antecedents', 'consequents', 'support', 'confidence', 'lift']].reset_index(drop=True) #min_confidence為0.3
 
+association_df
+```
+![image](https://user-images.githubusercontent.com/44692570/142761959-5ede1036-ed79-4829-b959-47cce02ec1ed.png)
+
+這裡我使用Apriori演算法去找出數據分析職缺中常出現的擅長工具組合，下面先簡單的解釋下欄位名稱所代表的意思:<br>
+
+- antecedents
+- consequents
+- support
+- confidence
+- lift
 
 
 
