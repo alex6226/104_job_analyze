@@ -170,8 +170,8 @@ association_df
 
 - antecedents(前項):類似於前因後果中的原因<br>
 - consequents(後項):類似於前因後果中的後果<br>
-- support(支持度):以第一筆資料為例，PowerPoint與Excel同時出現在樣本中的機率為0.148876，也就是說356個職缺有53個職缺要求你同時擅長PowerPoint及Excel<br>
-- confidence(信賴度):以第一筆資料為例，在要求需要PowerPoint的職位，有100%需要你會Excel<br>
+- support(支持度):以第一筆資料為例，support=0.148876表示說PowerPoint與Excel同時出現在樣本中的機率為0.148876，也就是說356個職缺有53個職缺要求你同時擅長PowerPoint及Excel<br>
+- confidence(信賴度):以第一筆資料為例，confidence=1代表在要求需要PowerPoint的職位，有100%需要你會Excel<br>
 - lift(提升度):計算方式為confidence(A->B)/support(B)，小於1為負相關，等於1為獨立，大於1則是正相關<br>
 
 了解Apriori演算法後來看分析結果，我們可以歸類出下面四種組合，分別為:<br>
